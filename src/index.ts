@@ -1,12 +1,12 @@
-import express from 'express';
+import "reflect-metadata";
+import { AppDataSource } from "./data-source";
+import app from "./app";
 
-const app = express();
-const PORT = 3000;
-
-app.get('/', (_req, res) => {
-  res.send('Hello from Express + TypeScript!');
-});
-
-app.listen(PORT, () => {
-  console.log(`Server running at http://localhost:${PORT}`);
-});
+AppDataSource.initialize()
+  .then(() => {
+    console.log("Data Source initialized");
+    app.listen(3000, () => {
+      console.log("Server is running at http://localhost:3000");
+    });
+  })
+  .catch((error) => console.error("Error during Data Source initialization:", error));
